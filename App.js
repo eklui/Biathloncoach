@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Pressable } from "react-native";
 
 const { width } = Dimensions.get("window");
-const TARGET_SIZE = width * 0.8; // Target width based on screen size
+const TARGET_SIZE = width * 0.95; 
 const SHOT_RADIUS = 10;
 
 export default function BiathlonCoach() {
@@ -54,17 +54,18 @@ export default function BiathlonCoach() {
     }
   };
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Ampumataulu</Text>
     
-      <TouchableOpacity style={styles.target} onPress={handleShot} onLayout={handleLayout}>
-        {[...Array(6)].map((_, index) => (
+      <Pressable style={styles.target} onPress={handleShot} onLayout={handleLayout}>
+        {[...Array(10)].map((_, index) => (
           <View
             key={index}
             style={[
               styles.ring,
-              { width: TARGET_SIZE * (1 - index * 0.2), height: TARGET_SIZE * (1 - index * 0.2), borderRadius: TARGET_SIZE * (1 - index * 0.2) / 2 }
+              { width: TARGET_SIZE * (1 - index * 0.10), height: TARGET_SIZE * (1 - index * 0.10), borderRadius: TARGET_SIZE * (1 - index * 0.10) / 2 }
             ]}
           />
         ))}
@@ -73,7 +74,7 @@ export default function BiathlonCoach() {
             <Text style={styles.shotText}>{index + 1}</Text>
           </View>
         ))}
-      </TouchableOpacity>
+      </Pressable>
 
       <Text style={styles.stopwatch}>Aika: {time.toFixed(1)} s</Text>
       <TouchableOpacity style={styles.lapButton} onPress={recordLap}>
