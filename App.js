@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Pressable } from "react-native";
-
+import * as SplashScreen from 'expo-splash-screen';
 const { width } = Dimensions.get("window");
 const TARGET_SIZE = width * 0.95; 
 const SHOT_RADIUS = 10;
 
+SplashScreen.preventAutoHideAsync();
 export default function BiathlonCoach() {
   const [shots, setShots] = useState([]);
   const [targetLayout, setTargetLayout] = useState({ x: 0, y: 0 });
