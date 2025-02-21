@@ -5,7 +5,7 @@ const { width } = Dimensions.get("window");
 const TARGET_SIZE = width * 0.95; 
 const SHOT_RADIUS = 10;
 
-SplashScreen.preventAutoHideAsync();
+
 export default function BiathlonCoach() {
   const [shots, setShots] = useState([]);
   const [targetLayout, setTargetLayout] = useState({ x: 0, y: 0 });
@@ -48,7 +48,7 @@ export default function BiathlonCoach() {
   };
 
   const recordLap = () => {
-    if (laps.length >= 10) {
+    if (laps.length >= 5) {
       setLaps([time.toFixed(1)]);
     } else {
       setLaps([...laps, time.toFixed(1)]);
@@ -66,7 +66,12 @@ export default function BiathlonCoach() {
             key={index}
             style={[
               styles.ring,
-              { width: TARGET_SIZE * (1 - index * 0.10), height: TARGET_SIZE * (1 - index * 0.10), borderRadius: TARGET_SIZE * (1 - index * 0.10) / 2 }
+              { 
+                width: TARGET_SIZE * (1 - index * 0.10), 
+                height: TARGET_SIZE * (1 - index * 0.10), 
+                borderRadius: TARGET_SIZE * (1 - index * 0.10) / 2,
+                backgroundColor: index <2  ? "white" : index <7 ? "#242222" :  "gray",
+              }
             ]}
           />
         ))}
@@ -77,21 +82,27 @@ export default function BiathlonCoach() {
         ))}
       </Pressable>
 
-      <Text style={styles.stopwatch}>Aika: {time.toFixed(1)} s</Text>
-      <TouchableOpacity style={styles.lapButton} onPress={recordLap}>
-        <Text style={styles.lapButtonText}>Kierros</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.startButton} onPress={() => setIsRunning(!isRunning)}>
-        <Text style={styles.startButtonText}>{isRunning ? "Pysäytä" : "Aloita"}</Text>
-      </TouchableOpacity>      
-      <View style={styles.lapsContainer}>
-        {laps.map((lap, index) => (
-          <Text key={index} style={styles.lapText}>Kierros {index + 1}: {lap} s</Text>
-        ))}
+      <View style={styles.controlsContainer}>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity style={styles.lapButton} onPress={recordLap}>
+            <Text style={styles.lapButtonText}>Kierros</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.startButton} onPress={() => setIsRunning(!isRunning)}>
+            <Text style={styles.startButtonText}>{isRunning ? "Pysäytä" : "Aloita"}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.clearButton} onPress={clearShots}>
+            <Text style={styles.clearButtonText}>Tyhjennä</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.stopwatchContainer}>
+          <Text style={styles.stopwatch}>Aika: {time.toFixed(1)} s</Text>
+          <View style={styles.lapsContainer}>
+            {laps.map((lap, index) => (
+              <Text key={index} style={styles.lapText}>Kierros {index + 1}: {lap} s</Text>
+            ))}
+          </View>
+        </View>
       </View>
-      <TouchableOpacity style={styles.clearButton} onPress={clearShots}>
-        <Text style={styles.clearButtonText}>Tyhjennä</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -106,7 +117,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 25,
+    marginBottom: 10,
+    position: "fixed",
+    top: 0,
   },
   divider: {
     width: TARGET_SIZE,
@@ -142,8 +155,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
   },
+  controlsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  buttonsContainer: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
   clearButton: {
-    marginTop: 10,
+    marginTop: 20,
     padding: 10,
     backgroundColor: "#007BFF",
     borderRadius: 5,
@@ -152,12 +176,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
+  stopwatchContainer: {
+    alignItems: "flex-end",
+  },
   stopwatch: {
-    marginTop: 20,
     fontSize: 18,
   },
   lapButton: {
-    marginTop: 10,
+    marginTop: 20,
     padding: 10,
     backgroundColor: "#FFA500",
     borderRadius: 5,
@@ -168,7 +194,7 @@ const styles = StyleSheet.create({
   },
   lapsContainer: {
     marginTop: 10,
-    alignItems: "center",
+    alignItems: "flex-end",
   },
   lapText: {
     fontSize: 16,
