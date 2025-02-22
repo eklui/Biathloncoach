@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Pressable } from "react-native";
+import { View, Text, Pressable, StyleSheet, Dimensions } from "react-native";
 import * as SplashScreen from 'expo-splash-screen';
 const { width } = Dimensions.get("window");
 const TARGET_SIZE = width * 0.95; 
 const SHOT_RADIUS = 10;
-
 
 export default function BiathlonCoach() {
   const [shots, setShots] = useState([]);
@@ -55,7 +54,6 @@ export default function BiathlonCoach() {
     }
   };
 
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Ampumataulu</Text>
@@ -84,15 +82,15 @@ export default function BiathlonCoach() {
 
       <View style={styles.controlsContainer}>
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.lapButton} onPress={recordLap}>
+          <Pressable style={styles.lapButton} onPress={recordLap}>
             <Text style={styles.lapButtonText}>Kierros</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.startButton} onPress={() => setIsRunning(!isRunning)}>
+          </Pressable>
+          <Pressable style={styles.startButton} onPress={() => setIsRunning(!isRunning)}>
             <Text style={styles.startButtonText}>{isRunning ? "Pysäytä" : "Aloita"}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.clearButton} onPress={clearShots}>
+          </Pressable>
+          <Pressable style={styles.clearButton} onPress={clearShots}>
             <Text style={styles.clearButtonText}>Tyhjennä</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
         <View style={styles.stopwatchContainer}>
           <Text style={styles.stopwatch}>Aika: {time.toFixed(1)} s</Text>
@@ -187,7 +185,6 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#FFA500",
     borderRadius: 5,
-    
   },
   lapButtonText: {
     color: "#fff",
