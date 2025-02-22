@@ -180,13 +180,14 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   stopwatch: {
-    fontSize: 18,
+    fontSize: 20,
   },
   lapButton: {
     marginTop: 20,
     padding: 10,
     backgroundColor: "#FFA500",
     borderRadius: 5,
+    
   },
   lapButtonText: {
     color: "#fff",
